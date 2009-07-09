@@ -1,0 +1,14 @@
+;$Id: fbconnect_profile.info,v 1.3 2009/02/27 17:46:09 lanets Exp $
+name= Fbconnect Profile
+description = Allows users to import their personal information from Facebook.
+dependencies[] = fbconnect
+package = Facebook connect
+php = 5.2
+core = 6.x
+
+; Information added by drupal.org packaging script on 2009-02-27
+version = "6.x-1.0-beta7"
+core = "6.x"
+project = "fbconnect"
+datestamp = "1235757657"
+
