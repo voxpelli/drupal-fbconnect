@@ -1,74 +1,74 @@
 <?php
 // $Id: fbconnect.admin.inc,v 1.10 2009/06/03 13:51:06 lanets Exp $
 
-/** 
- * @file 
- * Administration page callbacks for the fbconnect module. 
- */ 
+/**
+ * @file
+ * Administration page callbacks for the fbconnect module.
+ */
 
-/** 
- * Form builder. Configure fbconnect. 
+/**
+ * Form builder. Configure fbconnect.
  *
- * @see system_settings_form(). 
+ * @see system_settings_form()
  */
 function fbconnect_admin_settings() {
   global $base_url;
   $module_path = drupal_get_path('module', 'fbconnect') .'/images/';
-    
-  $form['fbconnect_key'] = array( 
-    '#type' => 'textfield', 
-    '#title' => t('Facebook key'), 
+
+  $form['fbconnect_key'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Facebook key'),
     '#default_value' => variable_get('fbconnect_key', NULL),
     '#description' => t('Your public API key'),
   );
-  
+
   $form['fbconnect_skey'] = array(
     '#type' => 'textfield',
     '#title' => t('Facebook Secret key'),
     '#default_value' => variable_get('fbconnect_skey', NULL),
     '#description' => t('Do not share your secret key with anyone'),
   );
-  
+
   $form['fbconnect_base_domaine'] = array(
     '#type' => 'textfield',
     '#title' => t('Base domain url'),
     '#description' => t('Use this to enable your Facebook Connect implementation to span multiple subdomains (e.g., using example.com would enable  www.example.com, foo.example.com or bar.example.com,).'),
     '#default_value' => variable_get('fbconnect_base_domaine', NULL),
   );
-  
+
   $form['fbconnect_connect_url'] = array(
     '#type' => 'textfield',
     '#title' => t('Connect url'),
     '#description' => t('Your site\'s main URL'),
     '#default_value' => variable_get('fbconnect_connect_url', $base_url),
   );
-  
+
   $form['fbconnect_fast_reg'] = array(
     '#type' => 'checkbox',
     '#title' => t('Fast registration mode'),
     '#default_value' => variable_get('fbconnect_fast_reg', NULL),
     '#description' => t('Unable this mode will bypass drupal\'s standard registration form.'),
   );
-  
+
   $form['fbconnect_invite_msg'] = array(
     '#type' => 'textfield',
-    '#title' => t('Invite message'),      
+    '#title' => t('Invite message'),
     '#default_value' => variable_get('fbconnect_invite_msg', t('Enjoy facebook connect')),
   );
-  
+
   $form['fbconnect_invite_name'] = array(
     '#type' => 'textfield',
-    '#title' => t('Your site name'),      
+    '#title' => t('Your site name'),
     '#default_value' => variable_get('fbconnect_invite_name', variable_get('site_name', NULL)),
   );
-  
+
   $form['fbconnect_invite_dest'] = array(
     '#type' => 'textfield',
     '#title' => t('Destination, after user\'s valid or skip invite friend form'),
     '#default_value' => variable_get('fbconnect_invite_dest', $base_url),
   );
 
-  if (fbconnect_get_config()) {  
+  if (fbconnect_get_config()) {
     $button = array(
       'small_short'  => fbconnect_render_button('small', 'short'),
       'medium_short' => fbconnect_render_button('medium', 'short'),
@@ -83,7 +83,7 @@ function fbconnect_admin_settings() {
       '#options' => $button,
     );
   }
-  
+
   $form['api']['fbconnect_reg_feed_id'] = array(
     '#type' => 'textfield',
     '#title' => t('Registration feed bundle ID'),
@@ -103,13 +103,13 @@ function fbconnect_admin_settings() {
 function fbconnect_set_appproperties($form, &$form_state) {
   if (!facebook_client()) {
     drupal_set_message(t('Unable to get a facebook client, check your api key'), 'error');
-    return FALSE;  
+    return FALSE;
   }
   if (!fbconnect_get_fbuid()) {
     drupal_set_message(t('Unable to autoconfigure your application settings, make sure you are logged into Facebook'), 'error');
     return FALSE;
   }
-  
+
   $properties = array(
     'connect_url' => $form_state['values']['fbconnect_connect_url'],
     'base_domain' => $form_state['values']['fbconnect_base_domaine'],
@@ -124,7 +124,7 @@ function fbconnect_set_appproperties($form, &$form_state) {
     drupal_set_message(t('Checking your facebook session, you are not allowed to change this application settings'), 'error');
   }
   else {
-    drupal_set_message(t('Your facebook app settings has been updated'));      
+    drupal_set_message(t('Your facebook app settings has been updated'));
   }
-    
+
 }
